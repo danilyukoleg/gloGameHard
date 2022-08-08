@@ -26,3 +26,4 @@ let getStart = () => {
   }
   botQuess();
 };
+getStart();
