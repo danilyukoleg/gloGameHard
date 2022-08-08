@@ -1,12 +1,31 @@
 "use strict";
 
 let getStart = () => {
-  let num = Math.floor(Math.random() * (100 - 1 + 1)) + 1;
+  let num = Math.floor(Math.random() * (100 - 1)) + 1;
+  let lock = 10;
 
-  function botQuess() {
+  return function botQuess() {
     let start = prompt("Угадай число от 1 до 100");
 
-    if ((isNaN(start) && !isFinite(start)) || start === "") {
+    if (parseInt(start) == num) {
+      let conf = confirm(`Поздравляю, Вы угадали!!! Хотели бы сыграть еще?`);
+      if (conf === true) {
+        getStart()();
+      } else {
+        alert("Игра окончена");
+      }
+    } else if (parseInt(start) > num) {
+      lock--;
+      alert(`Загаданное число меньше, осталось попыток ${lock}`);
+      botQuess();
+    } else if (parseInt(start) < num) {
+      lock--;
+      alert(`Загаданное число больше, осталось попыток ${lock}`);
+      botQuess();
+    }
+    console.log(start);
+
+    if ((isNaN(start) && !isFinite(start)) || start.trim() === "") {
       confirm("Введи число!");
       botQuess();
     }
@@ -14,17 +33,12 @@ let getStart = () => {
     if (start === null) {
       alert("Игра окончена");
     }
-    if (parseInt(start) == num) {
-      alert("Поздравляю, Вы угадали!!!");
-    } else if (parseInt(start) > num) {
-      alert("Загаданное число меньше");
-      botQuess();
-    } else if (parseInt(start) < num) {
-      alert("Загаданное число больше");
-      botQuess();
+
+    if (lock == 0) {
+      confirm("Попытки закончились, хотите сыграть еще?");
+      getStart()();
     }
-  }
-  botQuess();
+  };
 };
 
-getStart();
+getStart()();
