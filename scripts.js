@@ -1,7 +1,7 @@
 "use strict";
 
 let getStart = () => {
-  let num = Math.floor(Math.random() * (100 - 1 + 1)) + 1;
+  let num = 22;
 
   function botQuess() {
     let start = prompt("Угадай число от 1 до 100");
