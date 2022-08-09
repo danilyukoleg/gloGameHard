@@ -1,13 +1,25 @@
 "use strict";
 
-let getStart = () => {
+const getStart = () => {
   let num = Math.floor(Math.random() * (100 - 1)) + 1;
   let lock = 10;
 
-  return function botQuess() {
+  const botQuess = () => {
     let start = prompt("Угадай число от 1 до 100");
 
-    if (parseInt(start) == num) {
+    if (lock <= 1) {
+      let str = confirm("Попытки закончились, хотите сыграть еще?");
+      if (str) {
+        getStart();
+      } else {
+        alert("Игра окончена");
+      }
+    } else if (start === null) {
+      alert("Игра окончена");
+    } else if ((isNaN(start) && !isFinite(start)) || start.trim() === "") {
+      confirm("Введи число!");
+      botQuess();
+    } else if (parseInt(start) == num) {
       let conf = confirm(`Поздравляю, Вы угадали!!! Хотели бы сыграть еще?`);
       if (conf === true) {
         getStart()();
@@ -23,22 +35,8 @@ let getStart = () => {
       alert(`Загаданное число больше, осталось попыток ${lock}`);
       botQuess();
     }
-    console.log(start);
-
-    if ((isNaN(start) && !isFinite(start)) || start.trim() === "") {
-      confirm("Введи число!");
-      botQuess();
-    }
-
-    if (start === null) {
-      alert("Игра окончена");
-    }
-
-    if (lock == 0) {
-      confirm("Попытки закончились, хотите сыграть еще?");
-      getStart()();
-    }
   };
+  botQuess();
 };
 
-getStart()();
+getStart();
